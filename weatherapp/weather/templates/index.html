@@ -3,7 +3,32 @@
 <head>
     <title>Weather App</title>
 </head>
-<body>
-    <h1>Welcome to the Weather App</h1>
+<body style="background-color: #ffabab;">
+    <h1 style="text-align: center; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size:250%;">CITY INFO APP</h1>
+    <h3>Get instant city details by simply entering the city name</h3>
+    <div style="margin-left: 15%;">
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="city" placeholder="Enter city" required>
+            <button type="submit">Get Weather</button>
+        </form>
+    
+        {% if weather %}
+            <h2>Weather in {{ weather.name }}</h2>
+            <p style="color: brown; display: inline;">Temperature: {{ weather.main.temp }}°C </p> 
+            <p style="display: inline; color: rgb(4, 19, 154);">&nbsp; Condition: {{ weather.weather.0.description }}</p>
+            <br>
+            {% if city_image %}
+                <img src="{{ city_image }}" alt="City Image" style="width: 80%;height: 400px;; margin-top: 10px;">
+            {% else %}
+                <p>No image available for this city.</p>
+            {% endif %}
+        {% elif error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
+
+    </div>
+    
+
 </body>
 </html>
